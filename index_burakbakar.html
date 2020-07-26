@@ -1,0 +1,391 @@
+<html>
+    <head>
+    <style type="text/css">
+
+
+#arrayLayout {
+			height: 300px;
+			width: 1000px;
+			position: relative;
+			margin: 1080px auto;
+			border: ridge #03909C;
+            border-width: 25px;
+            color:#DD2C00;
+		}
+
+#inputContainer {
+			height: 100px;
+			width: 800px;
+			position: relative;
+			margin: 50px auto;	
+            
+		}
+
+
+    </style>
+
+    </head>
+    <body>
+
+
+
+        <div id="inputContainer">
+            <div>
+                <h1 style="text-align: center;background-color:rgb(205,0,0)">Selection Sort Algoritması Animasyonu</h1>
+          <h4 style="text-align: center;">Animasyon İçin Lütfen Aşağı İniniz</h4>
+          <br><br>
+          
+          <p style="text-align: center;color:#000080"">Selection Sort Algoritması Javascript Kodu Aşağıdaki Gibidir
+    <pre style="text-align: left;">
+    
+        function newsort(arr, left, right){    
+
+            for(var i= left; i < right; ++i){
+                var min = i;
+                for (var j = i; j < right; ++j){
+                    if (arr[min] > arr[j]){
+                    min = j;
+                    }
+                }
+            
+            var temp = arr[min];
+            arr[min] = arr[i];
+            arr[i] = temp;  
+            
+            }
+            return arr;
+    </pre>
+    </hp>
+           <br><br>
+          <h3 style="text-align: left;color:rgb(205,0,0)">Zaman Karmaşıklığı (Time Complexity)</h3>
+          <p style="text-align: left;">&emsp; &emsp;Bu algoritma, iç içe iki döngüden oluştuğu ve dizinin tüm elemanlarını gezdiği için Ο(n^2) zamanında çalışmaktadır.</p>
+          <br><br>
+          <h3 style="text-align: left;color:rgb(205,0,0)">Bellek Alanı Açısından Algoritma</h3>
+          <p style="text-align: left;">&emsp; &emsp;Bu algoritma açısından iyi haber ise, bir diziyi sıralamak için yeni bir diziye ihtiyaç duymamasıdır.  Bu açıdan algoritma, bellekte yeni bir dizi alanı oluşturmaz.</p>
+          <br><br>
+          <h3 style="text-align: center;">Algoritmaların Analizi - Muhammed Maruf Öztürk</h3>
+          <h3 style="text-align: center;">Burak Bakar 1521012038</h3>
+          <p style="text-align: center;background-color:#00FFFF"">2019-2020 Eğitim Öğretim Yılı</p>
+          <br><br>
+          <h1 style="text-align: center;">Lütfen Sayıları Giriniz</h1>
+		  <p style="text-align: left;">Değişim işlemlerini görüntülemek için sıralamayı başlattıktan sonra F12 tuşu yardımıyla konsol ekranından faydalanabilirsiniz.</p>
+          
+          
+            </div>
+            <div style="text-align: center;" >
+                 <input style="text-align: center;" class="form-control" id="txtArrayValues" type="text" name="" value="5,6,7,8,2,9,4,3,1" placeholder="Array sample(separate it by comma(','))">
+            </div>
+            <br>	
+            <div style="text-align: center ;">
+                <button id="btnSimulateArray" class="btn btn-primary form-control">BAŞLAT</button>			
+            </div>
+        </div>
+        
+        <div id="arrayLayout">
+            <br /><br />
+            <p id="lblSimulationStatus" style="text-align:center;font-size:20px;" hidden>Sıralama Tamamlandı</p>
+            <div id="arrayContainer">
+                
+            </div>
+        
+        </div>
+
+
+
+
+    <script>
+
+
+const _topPosition = 100;
+var upPosition = 100;
+var downPosition = 100;
+var leftPosition2 = 140;
+var leftPosition = 70;
+var init = false;
+
+var greaterElemLeftPosition = 0;
+var _constGreaterElemLeftPosition = 0;
+
+var greaterElemUpPosition = 0;
+var leastElemLeftPosition = 0;
+var _constLeastElemLeftPosition = 0;
+
+var leastElemUpPosition = 0;
+
+var greaterElementTransferComplete = false;
+var leastElementTransferComplete = false;
+
+//note: for improvisation
+function swapPosition(leastElement, greaterElement) {
+    upPosition -= 5;
+    downPosition += 5;
+
+    if (!init) {
+        //todo: put initialize codes here...
+        greaterElementTransferComplete = false;
+        leastElementTransferComplete = false;
+        
+        upPosition = 100;
+        downPosition = 100;
+        greaterElemLeftPosition = parseInt(greaterElement.style.left.replace('px', ''));
+        _constGreaterElemLeftPosition = greaterElemLeftPosition;
+        
+        greaterElemTopPosition = parseInt(greaterElement.style.top.replace('px', ''));
+        
+        leastElemLeftPosition = parseInt(leastElement.style.left.replace('px', ''));
+        _constLeastElemLeftPosition = leastElemLeftPosition;
+
+        leastElemTopPosition = parseInt(leastElement.style.top.replace('px', ''));
+        
+        init = true;
+        console.log('Başlatılıyor..');
+    }
+
+    if (upPosition > 30) {  
+        leastElement.style.top = upPosition+"px";
+    } else {
+        var styleLeft = parseInt(leastElement.style.left.replace("px",""));
+
+        if (styleLeft > _constGreaterElemLeftPosition) {
+            // leftPosition2 -= 5;
+            styleLeft-=5;
+            leastElement.style.left = styleLeft+"px";
+        } else {
+
+            var styleTop = parseInt(leastElement.style.top.replace("px",""));
+            if (_topPosition > styleTop) {
+                styleTop += 5;
+                leastElement.style.top = styleTop+"px";
+            } else
+                leastElementTransferComplete = true;
+
+        }
+
+    }
+
+    if (downPosition < 170) {
+        greaterElement.style.top = downPosition+"px";
+    } else {
+        var styleLeft = parseInt(greaterElement.style.left.replace("px",""));
+
+        if (styleLeft < _constLeastElemLeftPosition) {
+            styleLeft += 5;
+            greaterElement.style.left = styleLeft+"px";
+        } else {
+
+            var styleTop = parseInt(greaterElement.style.top.replace("px",""));
+            if (_topPosition < styleTop) {
+                styleTop -= 5;
+                greaterElement.style.top = styleTop+"px";
+            } else
+                greaterElementTransferComplete = true;
+
+        }
+
+    }
+
+    return greaterElementTransferComplete && leastElementTransferComplete;
+}
+
+
+var body = {
+		element: document.body
+	}
+	var txtArrayValue = document.getElementById('txtArrayValues');
+	console.log(txtArrayValue.value.split(','));
+	var sizeSwitch = false;
+
+	var elementLblSimulation = {
+		element: document.getElementById('lblSimulationStatus'),
+		animate: function () {
+			var fontSize = parseInt(this.element.style.fontSize.replace('px', ''));
+			var _self = this;
+			console.log('font size: '+fontSize);
+
+			var animation = function () {
+				fontSize = sizeSwitch ? fontSize - 1 : fontSize + 1;
+
+				if (fontSize >= 20) {
+					sizeSwitch = true;
+				} else if (fontSize <= 12) {
+					sizeSwitch = false;
+				}
+
+				_self.element.style.fontSize = fontSize+'px';
+			}
+
+			setInterval(animation, 40);
+		}
+	}
+
+	var arrayContainer = {
+		element: document.getElementById('arrayContainer'),
+		clean: function () {
+			this.element.innerHTML = "";
+		}
+	};
+
+	var elementUi = {
+		create: function (elementNumber, leftPosition) {
+			var newElement = Object.create(this);
+			newElement.element = document.createElement('div');
+			newElement.element.id = "arr"+elementNumber;
+			var elemStyle = newElement.element.style;
+    		var textnode = document.createTextNode(elementNumber);
+    		newElement.element.appendChild(textnode);
+
+			elemStyle.width = '50px';
+			elemStyle.height = '50px';
+			elemStyle.position = 'absolute';
+			elemStyle.display = 'inline-block';
+			elemStyle.border = 'solid white';
+			
+			elemStyle.left = leftPosition+'px'; //70px - initial value
+			elemStyle.top = '100px';
+			elemStyle.textAlign = 'center';
+			elemStyle.verticalAlign = 'middle';
+			elemStyle.lineHeight = '50px';
+
+			arrayContainer.element.appendChild(newElement.element);
+
+			return newElement;
+		},
+		locateAndModifyStyleProperties: function (elementNumber, borderColor) {
+			var exElement = document.getElementById('arr'+elementNumber);
+			exElement.style.border = 'solid '+borderColor;
+		}
+	}
+
+	var btn = document.getElementById('btnSimulateArray');
+	var txtInput = document.getElementById('txtArrayValues');
+	var arr = txtArrayValue.value.split(','); //[5,6,7,8,2,9,4];
+	var leftPosit = 70;
+	function initializeArrayElements() {
+		elementLblSimulation.element.setAttribute('hidden', '');		
+    arrayContainer.clean();
+		leftPosit = 70;
+		
+		lastVal = 0;
+		lastCurrVal = 0;
+		currValue = 0;
+		newValue = 0;
+		counter = 0;
+		i = 0;
+		j = i+1;
+		clearInterval(animateInterval);
+		clearInterval(animateArraySwap);
+		animateArraySwap = undefined;
+		animateInterval = undefined;
+
+		arr.forEach(function (i) {
+			elementUi.create(i, leftPosit);
+			 //console.log(i);
+			leftPosit += 70;
+		});
+	}
+	initializeArrayElements();
+
+	btn.addEventListener('click', function () {
+		arr = txtArrayValue.value.split(','); //[5,6,7,8,2,9,4];
+		initializeArrayElements();
+		animateInterval = animateSelectionSort();
+	});
+
+	function myFunction(arr) {
+		console.log('fonksiyon çalıştı.');
+		console.log(arr);
+		clearInterval(animateInterval);
+	}
+
+	var counter = 0;
+	var i = 0;
+	var j = i+1;
+	var animateArraySwap = undefined;
+	var animateInterval = undefined;
+
+	function swapArray(leastElement, greaterElement) {
+		clearInterval(animateInterval);
+		return setInterval(function () {
+				console.log('İndis Değeri Değiştiriliyor.');
+				var doneSwap = swapPosition(leastElement, greaterElement);
+				if (doneSwap) {
+					clearInterval(animateArraySwap);
+					animateInterval = animateSelectionSort();
+				}
+			}, 10);
+	}
+
+	var lastVal = 0;
+	var lastCurrVal = 0;
+	var currValue = 0;
+	var newValue = 0;
+	function moveIteration() {
+		j++;
+		if (j > arr.length-1) {
+			lastCurrVal = currValue;
+			j = i+1;
+			i += 1;
+		}
+	}
+	function finishIteration() {
+		if (i > arr.length-1) {
+			clearInterval(animateInterval);
+			elementUi.locateAndModifyStyleProperties(lastCurrVal, 'white');
+			elementLblSimulation.element.removeAttribute('hidden');
+			// elementLblSimulation.animate();
+		}
+	}
+
+	function animateSelectionSort() {
+		return setInterval(function () {
+
+			if (lastCurrVal > 0 && lastCurrVal != newValue) {
+				elementUi.locateAndModifyStyleProperties(lastCurrVal, 'white');
+			}
+			if (lastVal > 0 && lastVal != currValue) {
+				elementUi.locateAndModifyStyleProperties(lastVal, 'white');
+			}
+			currValue = arr[i];
+			console.log('Mevcut Değer : '+currValue);
+			console.log('Son Mevcut Değer '+lastCurrVal);
+			
+			newValue = arr[j];
+			console.log('Yeni Değer : '+newValue);
+			console.log('Son Yeni Değer : '+lastVal);
+
+			elementUi.locateAndModifyStyleProperties(currValue, 'blue');
+			elementUi.locateAndModifyStyleProperties(newValue, 'blue');
+
+			if (currValue > newValue) {
+				//play new animation here for demonstrating array transfer and halt the current animation
+				var elemNewValue = document.getElementById('arr'+newValue);
+				var elemCurrValue = document.getElementById('arr'+currValue);
+
+				init = false;
+
+				arr[i] = newValue;
+				arr[j] = currValue;
+
+				/*for animation purposes...*/
+				lastCurrVal = currValue;
+				currValue = newValue;
+				/*END*/
+				
+				animateArraySwap = swapArray(elemNewValue, elemCurrValue);
+				return;
+			}
+			lastVal = newValue;
+
+			moveIteration();
+			finishIteration();
+
+			console.log('\n\n');
+
+		}, 200);
+
+	}
+
+
+    </script>
+    </body>
+</html>
